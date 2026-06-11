@@ -13,7 +13,8 @@ export async function POST(req: NextRequest) {
     }
 
     const { stdout } = await execAsync(
-      `python -m yt_dlp --dump-json --no-playlist "${url}"`
+      `yt-dlp --dump-json --no-playlist "${url}"`,
+      { timeout: 60000 }
     )
     
     const info = JSON.parse(stdout)
