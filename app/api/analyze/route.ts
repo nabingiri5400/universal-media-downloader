@@ -4,6 +4,8 @@ import { promisify } from 'util'
 
 const execAsync = promisify(exec)
 
+const YTDLP = process.platform === 'win32' ? 'python -m yt_dlp' : '/usr/local/bin/yt-dlp'
+
 export async function POST(req: NextRequest) {
   try {
     const { url } = await req.json()
@@ -13,7 +15,7 @@ export async function POST(req: NextRequest) {
     }
 
     const { stdout } = await execAsync(
-      `yt-dlp --dump-json --no-playlist "${url}"`,
+      `${YTDLP} --dump-json --no-playlist "${url}"`,
       { timeout: 60000 }
     )
     
